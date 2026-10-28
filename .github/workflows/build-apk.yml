@@ -33,11 +33,10 @@ jobs:
       with:
         packages: 'platform-tools'
 
-    # 1. АВТОМАТИЧЕСКИЙ ПОИСК ПАПКИ С ПРОЕКТОМ
+    # 1. АВТОМАТИЧЕСКИЙ ПОИСК ПАПКИ (ищет build.gradle)
     - name: Find Project Directory
       id: find-dir
       run: |
-        # Ищем файл build.gradle, чтобы понять, где лежит проект
         GRADLE_FILE=$(find . -name "build.gradle" -not -path "*/node_modules/*" | head -n 1)
         if [ -z "$GRADLE_FILE" ]; then
           echo "::error::Файл build.gradle не найден! Проверьте, загружен ли проект."
@@ -47,7 +46,7 @@ jobs:
         echo "Найдена папка проекта: $PROJECT_DIR"
         echo "project_dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
 
-    # 2. ГЕНЕРАЦИЯ GRADLE WRAPPER (если его нет)
+    # 2. АВТОМАТИЧЕСКОЕ СОЗДАНИЕ GRADLE WRAPPER
     - name: Generate Gradle Wrapper
       working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: gradle wrapper --gradle-version 8.9
