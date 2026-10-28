@@ -2,45 +2,62 @@ name: Build Debug APK
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:   # можно запускать вручную кнопкой
+    branches: [ "main" ]
+  workflow_dispatch: # Позволяет запускать сборку вручную кнопкой
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     defaults:
       run:
-        working-directory: zedghthtdh/amix-native
+        working-directory: zedgththdh/amix-native
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    # Установка Node.js (нужна, если в проекте есть package.json)
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: gradle
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
 
-      - name: Generate Gradle Wrapper
-        run: gradle wrapper --gradle-version 8.9
+    # ИСПРАВЛЕНО: обновлено до @v4 и добавлен пакет platform-tools
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v4
+      with:
+        packages: 'platform-tools'
 
-      - name: Make gradlew executable
-        run: chmod +x gradlew
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper --gradle-version 8.9
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+    - name: Make gradlew executable
+      run: chmod +x gradlew
 
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: amix-debug-apk
-          path: zedghthtdh/amix-native/app/build/outputs/apk/debug/*.apk
-          retention-days: 14
+    # Безопасная установка зависимостей: сработает только если есть package.json
+    - name: Install JS Dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm install
+        fi
+
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug --stacktrace
+
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: amix-debug-apk
+        path: zedgththdh/amix-native/app/build/outputs/apk/debug/*.apk
+        retention-days: 14
