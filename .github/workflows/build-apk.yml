@@ -25,7 +25,6 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    # Шаг для установки Gradle (на случай, если его нет в системе)
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
@@ -34,22 +33,45 @@ jobs:
       with:
         packages: 'platform-tools'
 
-    # Делаем gradlew исполняемым (файл уже должен быть в репозитории)
+    # 1. АВТОМАТИЧЕСКИЙ ПОИСК ПАПКИ С ПРОЕКТОМ
+    - name: Find Project Directory
+      id: find-dir
+      run: |
+        # Ищем файл build.gradle, чтобы понять, где лежит проект
+        GRADLE_FILE=$(find . -name "build.gradle" -not -path "*/node_modules/*" | head -n 1)
+        if [ -z "$GRADLE_FILE" ]; then
+          echo "::error::Файл build.gradle не найден! Проверьте, загружен ли проект."
+          exit 1
+        fi
+        PROJECT_DIR=$(dirname "$GRADLE_FILE")
+        echo "Найдена папка проекта: $PROJECT_DIR"
+        echo "project_dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
+
+    # 2. ГЕНЕРАЦИЯ GRADLE WRAPPER (если его нет)
+    - name: Generate Gradle Wrapper
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
+      run: gradle wrapper --gradle-version 8.9
+
     - name: Make gradlew executable
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: chmod +x gradlew
 
     - name: Install JS Dependencies
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: |
         if [ -f package.json ]; then
           npm install
         fi
 
+    # 3. СБОРКА APK
     - name: Build Debug APK
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: ./gradlew assembleDebug --stacktrace
 
+    # 4. ЗАГРУЗКА APK
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
         name: amix-debug-apk
-        path: app/build/outputs/apk/debug/*.apk
+        path: ${{ steps.find-dir.outputs.project_dir }}/app/build/outputs/apk/debug/*.apk
         retention-days: 14
