@@ -13,20 +13,6 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # 🔍 АВТОМАТИЧЕСКИЙ ПОИСК ПАПКИ С ПРОЕКТОМ
-    - name: Find Project Directory
-      id: find-dir
-      run: |
-        # Ищем файл gradlew, чтобы определить корень Android-проекта
-        GRADLEW_PATH=$(find . -name "gradlew" -type f | head -n 1)
-        if [ -z "$GRADLEW_PATH" ]; then
-          echo "::error::Файл gradlew не найден в репозитории. Убедитесь, что он загружен и не исключен через .gitignore."
-          exit 1
-        fi
-        PROJECT_DIR=$(dirname "$GRADLEW_PATH")
-        echo "Найдена папка проекта: $PROJECT_DIR"
-        echo "project_dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
-
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -39,6 +25,7 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
+    # Шаг для установки Gradle (на случай, если его нет в системе)
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
@@ -47,30 +34,22 @@ jobs:
       with:
         packages: 'platform-tools'
 
-    # Используем найденную директорию
-    - name: Generate Gradle Wrapper
-      working-directory: ${{ steps.find-dir.outputs.project_dir }}
-      run: gradle wrapper --gradle-version 8.9
-
+    # Делаем gradlew исполняемым (файл уже должен быть в репозитории)
     - name: Make gradlew executable
-      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: chmod +x gradlew
 
     - name: Install JS Dependencies
-      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: |
         if [ -f package.json ]; then
           npm install
         fi
 
     - name: Build Debug APK
-      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: ./gradlew assembleDebug --stacktrace
 
-    # Загружаем APK из найденной директории
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
         name: amix-debug-apk
-        path: ${{ steps.find-dir.outputs.project_dir }}/app/build/outputs/apk/debug/*.apk
+        path: app/build/outputs/apk/debug/*.apk
         retention-days: 14
