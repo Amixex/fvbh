@@ -3,7 +3,7 @@ name: Build Debug APK
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: # Позволяет запускать сборку вручную
+  workflow_dispatch:
 
 jobs:
   build:
@@ -12,8 +12,20 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
-      with:
-        submodules: recursive # Скачивает вложенные папки, если они есть
+
+    # 🔍 АВТОМАТИЧЕСКИЙ ПОИСК ПАПКИ С ПРОЕКТОМ
+    - name: Find Project Directory
+      id: find-dir
+      run: |
+        # Ищем файл gradlew, чтобы определить корень Android-проекта
+        GRADLEW_PATH=$(find . -name "gradlew" -type f | head -n 1)
+        if [ -z "$GRADLEW_PATH" ]; then
+          echo "::error::Файл gradlew не найден в репозитории. Убедитесь, что он загружен и не исключен через .gitignore."
+          exit 1
+        fi
+        PROJECT_DIR=$(dirname "$GRADLEW_PATH")
+        echo "Найдена папка проекта: $PROJECT_DIR"
+        echo "project_dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -35,32 +47,30 @@ jobs:
       with:
         packages: 'platform-tools'
 
-    # ⚠️ ВНИМАНИЕ: Здесь указан путь к папке с проектом. 
-    # Если папка называется иначе, измените 'zedgththdh/amix-native' на правильное название.
-    # Если файлы лежат прямо в корне (без папок), замените на точку: working-directory: .
+    # Используем найденную директорию
     - name: Generate Gradle Wrapper
-      working-directory: zedgththdh/amix-native
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: gradle wrapper --gradle-version 8.9
 
     - name: Make gradlew executable
-      working-directory: zedgththdh/amix-native
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: chmod +x gradlew
 
     - name: Install JS Dependencies
-      working-directory: zedgththdh/amix-native
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: |
         if [ -f package.json ]; then
           npm install
         fi
 
     - name: Build Debug APK
-      working-directory: zedgththdh/amix-native
+      working-directory: ${{ steps.find-dir.outputs.project_dir }}
       run: ./gradlew assembleDebug --stacktrace
 
-    # ⚠️ ВНИМАНИЕ: Здесь тоже нужно проверить путь к APK файлу
+    # Загружаем APK из найденной директории
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
         name: amix-debug-apk
-        path: zedgththdh/amix-native/app/build/outputs/apk/debug/*.apk
+        path: ${{ steps.find-dir.outputs.project_dir }}/app/build/outputs/apk/debug/*.apk
         retention-days: 14
