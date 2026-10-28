@@ -3,21 +3,18 @@ name: Build Debug APK
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: # Позволяет запускать сборку вручную кнопкой
+  workflow_dispatch: # Позволяет запускать сборку вручную
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    defaults:
-      run:
-        working-directory: zedgththdh/amix-native
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
+      with:
+        submodules: recursive # Скачивает вложенные папки, если они есть
 
-    # Установка Node.js (нужна, если в проекте есть package.json)
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
@@ -33,28 +30,34 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
-    # ИСПРАВЛЕНО: обновлено до @v4 и добавлен пакет platform-tools
     - name: Setup Android SDK
       uses: android-actions/setup-android@v4
       with:
         packages: 'platform-tools'
 
+    # ⚠️ ВНИМАНИЕ: Здесь указан путь к папке с проектом. 
+    # Если папка называется иначе, измените 'zedgththdh/amix-native' на правильное название.
+    # Если файлы лежат прямо в корне (без папок), замените на точку: working-directory: .
     - name: Generate Gradle Wrapper
+      working-directory: zedgththdh/amix-native
       run: gradle wrapper --gradle-version 8.9
 
     - name: Make gradlew executable
+      working-directory: zedgththdh/amix-native
       run: chmod +x gradlew
 
-    # Безопасная установка зависимостей: сработает только если есть package.json
     - name: Install JS Dependencies
+      working-directory: zedgththdh/amix-native
       run: |
         if [ -f package.json ]; then
           npm install
         fi
 
     - name: Build Debug APK
+      working-directory: zedgththdh/amix-native
       run: ./gradlew assembleDebug --stacktrace
 
+    # ⚠️ ВНИМАНИЕ: Здесь тоже нужно проверить путь к APK файлу
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
