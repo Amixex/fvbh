@@ -33,15 +33,19 @@ jobs:
       with:
         packages: 'platform-tools'
 
-    # 1. АВТОМАТИЧЕСКИЙ ПОИСК ПАПКИ (ищет build.gradle)
+    # 1. УЛУЧШЕННЫЙ ПОИСК ПАПКИ (ищет любые файлы Gradle)
     - name: Find Project Directory
       id: find-dir
       run: |
-        GRADLE_FILE=$(find . -name "build.gradle" -not -path "*/node_modules/*" | head -n 1)
+        # Ищем settings.gradle или build.gradle в любых вариациях (.kts тоже)
+        GRADLE_FILE=$(find . -type f \( -name "settings.gradle" -o -name "settings.gradle.kts" -o -name "build.gradle" -o -name "build.gradle.kts" \) -not -path "*/node_modules/*" | head -n 1)
+        
         if [ -z "$GRADLE_FILE" ]; then
-          echo "::error::Файл build.gradle не найден! Проверьте, загружен ли проект."
+          echo "::error::Файлы Gradle не найдены! Вот что лежит в репозитории:"
+          ls -laR . # Выведет список всех файлов для отладки
           exit 1
         fi
+        
         PROJECT_DIR=$(dirname "$GRADLE_FILE")
         echo "Найдена папка проекта: $PROJECT_DIR"
         echo "project_dir=$PROJECT_DIR" >> $GITHUB_OUTPUT
