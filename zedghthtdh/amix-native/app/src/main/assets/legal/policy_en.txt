@@ -1,0 +1,47 @@
+# Privacy Policy
+
+_Version 12.10.2026. Personal data processing policy under Russian Federal Law No. 152-FZ._
+
+## 1. General
+
+This Policy sets out how personal data is processed in Amix. Operator: [name / tax ID]. Contact: [e-mail].
+
+## 2. Data processed
+
+The Service has a server side. When you sign in with Google or e-mail (Firebase Authentication), the server stores: your unique user ID; email; name and avatar link; provider ID; start and end date of the 7-day trial; Pro flag and its expiry; promo code usage flag; a hash of the device identifier (to track the 24-hour guest trial); account creation date and last login date.
+
+Passwords are never stored in plain text: authentication is handled by Firebase Authentication.
+
+Chat messages are processed locally on the device and are not sent to the Operator's servers: the AI model is built into the app and works offline, and chat history is stored only on the device.
+
+When you pay for Pro, the Operator receives from the payment service YooKassa the payment ID, amount, chosen plan and status. Card details are entered on the payment service's side and are not passed to the Operator.
+
+The microphone is used only on the "Voice AI" screen for a visual effect. Audio is not recorded, stored or transmitted.
+
+## 3. Purposes and legal grounds
+
+Providing the Service, tracking the 24-hour guest and 7-day signed-in trial (contract, Art. 6(1)(5) of 152-FZ); creating and using a profile (consent, Art. 6(1)(1) and Art. 9); complying with Russian law (Art. 6(1)(2)).
+
+## 4. Retention
+
+Data on the device (language, chat history, settings) is kept until you delete it via Settings → Data on this device or uninstall the app. Profile data is kept while the account is active and destroyed within 30 days after account deletion or withdrawal of consent.
+
+## 5. Localization and third parties
+
+[CLARIFY BEFORE PUBLISHING: where data is stored. The app currently uses Firebase Authentication and Cloud Firestore (Google), whose servers are outside the Russian Federation. Localization of Russian citizens' personal data (Art. 18(5) of 152-FZ) requires a separate decision.] Pro payments are processed by the payment service YooKassa. Data is not sold or shared with third parties except as required by law.
+
+## 6. Your rights
+
+You may obtain information about processing (Art. 14), request correction, blocking or deletion (Arts. 14, 21), withdraw consent (Art. 9(2)), and complain to Roskomnadzor or a court (Art. 17).
+
+## 7. Security
+
+HTTPS, hashed passwords (Firebase Authentication), Firestore security rules restricting users to their own profile and forbidding any change of trial/Pro fields.
+
+## 8. Minors
+
+Under 14: only with the participation of parents or legal representatives. Ages 14–17: with their consent.
+
+## 9. Changes
+
+A new version takes effect when published in the Service.

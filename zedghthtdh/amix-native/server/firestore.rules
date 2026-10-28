@@ -1,0 +1,59 @@
+rules_version = '2';
+// ВНИМАНИЕ: правила НЕ проверены в эмуляторе (в моей среде его нет). Проверьте в консоли Firebase
+// (Firestore → Правила → «Симулятор») перед публикацией.
+// Клиенту запрещено писать поля Pro: их ставит только сервер (Cloud Functions, Admin SDK).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function privilegedKeys() {
+      return ['isPro', 'proExpiresAt', 'proStartedAt', 'promoUsed', 'promoCode', 'lastPaymentId'];
+    }
+
+    // При создании профиля Pro-поля должны быть пустыми
+    function createIsClean() {
+      let d = request.resource.data;
+      return d.get('isPro', false) == false
+          && d.get('proExpiresAt', null) == null
+          && d.get('promoUsed', false) == false
+          && !('promoCode' in d)
+          && !('proStartedAt' in d)
+          && !('lastPaymentId' in d);
+    }
+
+    // При обновлении Pro-поля менять нельзя
+    function updateIsClean() {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny(privilegedKeys());
+    }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create: if isOwner(uid) && createIsClean();
+      allow update: if isOwner(uid) && updateIsClean();
+      allow delete: if isOwner(uid);
+    }
+
+    // Служебные коллекции: только сервер
+    match /promocodes/{code} { allow read, write: if false; }
+    match /promoRedemptions/{id} { allow read, write: if false; }
+    match /promoAttempts/{id} { allow read, write: if false; }
+    match /payments/{id} { allow read, write: if false; }
+    match /pendingPayments/{id} { allow read, write: if false; }
+    match /nativeDevices/{id} { allow read, write: if false; }
+
+    // Документ устройства (используется веб-версией): читать по известному id можно,
+    // Pro-поля писать нельзя
+    match /devices/{deviceId} {
+      allow get: if true;
+      allow list: if false;
+      allow create: if request.resource.data.get('isPro', false) == false
+                    && request.resource.data.get('proExpiresAt', null) == null
+                    && request.resource.data.get('promoUsed', false) == false;
+      allow update: if !request.resource.data.diff(resource.data).affectedKeys()
+                         .hasAny(['isPro', 'proExpiresAt', 'proStartedAt', 'promoUsed', 'promoCode']);
+    }
+  }
+}

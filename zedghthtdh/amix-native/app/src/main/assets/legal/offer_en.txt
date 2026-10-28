@@ -1,0 +1,33 @@
+# Amix Pro Public Offer
+
+_Version 12.10.2026._
+
+
+## 1. General
+
+Public offer (Art. 437 of the Civil Code) by [name / tax ID].
+
+## 2. Price
+
+Amix Pro plans:
+- 1 month: 200 RUB;
+- 6 months: 900 RUB (25% discount compared with monthly payments);
+- 12 months: 1500 RUB (37% discount).
+
+Payment is processed by YooKassa. There is no auto-renewal: each payment extends access for the chosen period.
+
+## 3. Promo codes
+
+Promo codes activate Pro for a specified period and cannot be reused.
+
+## 4. Payment and receipt
+
+Paid via a payment service; receipt issued as required by Russian law.
+
+## 5. Cancellation and refund
+
+Consumer may cancel at any time (Art. 32 of the Consumer Protection Law).
+
+## 6. Details
+
+[name, tax ID, e-mail, address]
