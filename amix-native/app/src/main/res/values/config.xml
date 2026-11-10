@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Единая ссылка для всех кнопок «Приобрести PRO». Чтобы сменить, поменяйте её здесь и пересоберите приложение. -->
+    <string name="buy_url" translatable="false">https://t.me/AmixAiOffline</string>
+</resources>

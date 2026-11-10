@@ -1,0 +1,20 @@
+# Public Offer for PRO
+_Version: [date]. Seller: [name, tax ID]. Contact: Telegram https://t.me/AmixAiOffline, [contact email]._
+
+## 1. General
+This offer (Art. 437 of the Civil Code of the Russian Federation) sets the terms for obtaining the "Amix PRO" license for the Amix mobile app.
+
+## 2. Subject
+The seller grants the buyer the right to use PRO features for the period stated when the license key is sold. The license is digital; no physical delivery is required.
+
+## 3. Price and payment
+The seller names the price and payment method when you buy a key in Telegram [or on a marketplace: specify]: [specify prices and payment methods]. There are no automatic charges and no auto-renewal.
+
+## 4. Receiving and activation
+After payment the seller gives the buyer a license key. The buyer enters it in the app's activation window. A key can be activated once and works on one device. The license period starts at activation.
+
+## 5. Refunds
+[Refund terms for a digital product: specify, e.g. a refund is possible before the key is activated, on request to the seller within [period].] After the key is activated the license is considered provided.
+
+## 6. Liability and disputes
+The seller is responsible for the key working within the paid period. Claims are accepted at the contacts above, review period [period]. Russian law applies.

@@ -1,0 +1,38 @@
+# Privacy Policy
+_Version: [date]. Operator: [name], tax ID [ID], contact: [contact email]._
+
+## 1. General
+This policy describes what data the Amix mobile app for Android (the "Service") processes and how it is protected. The Service has no registration: no name, e-mail, phone number or password.
+
+## 2. What data is processed
+- Device identifier. The app creates it on the device. The server stores only its irreversible hash (SHA-256), the start date of the free period and the PRO expiry date.
+- Information about activating a license key or promo code: the code itself, the activation date and the device hash.
+- Technical request data. The IP address is used only to protect against abuse and is stored as a salted hash together with request counters.
+- Data that stays on the device and is never transmitted: chat history, language and settings.
+
+## 3. AI chats and microphone
+Message texts are processed on the device: the AI model is built into the app and works offline. Messages are not sent to the Operator or third parties. The microphone is used only on the "Voice AI" screen for a visual effect. Audio is not recorded, stored or transmitted.
+
+## 4. Purposes
+- tracking the free period (7 days from the first launch);
+- checking and activating license keys and promo codes;
+- protection against code guessing and other abuse;
+- user support.
+
+## 5. Buying a key
+License keys are sold by the developer (Telegram: https://t.me/AmixAiOffline) [and through a marketplace: specify]. Information you give the seller when buying is processed by the corresponding service and in your correspondence with the seller.
+
+## 6. Storage and transfer
+[CLARIFY BEFORE PUBLISHING: where data is stored. The server side runs on Firebase (Google Cloud) services whose servers are outside the Russian Federation. Localization of Russian citizens' personal data requires a separate decision.] Data is not sold and is not passed to third parties except as required by law.
+
+## 7. Retention
+Device and activation records are kept while the free period or license is valid and for [period] afterwards. Data on the device is kept until you delete it via Settings → Data on this device or uninstall the app.
+
+## 8. Your rights
+You can request information about processing, correction or deletion of data by writing to [contact email]. For deletion, specify the device identifier or the key you activated. Deleting the free-period record may make it impossible to get the free period again: this protects against abuse.
+
+## 9. Children
+The Service does not collect personal data. Children under 14 should use the Service with the consent of a parent or legal guardian.
+
+## 10. Changes
+The current version of the policy is always available in the app (Privacy section) and on the website [website address].
