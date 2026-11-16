@@ -1,0 +1,64 @@
+/* Правила экрана «Голосовой ИИ» из index.html */
+.voice-stage{position:relative;min-height:calc(100dvh - 180px);overflow:hidden;isolation:isolate;text-align:center;align-items:center;justify-items:center;gap:18px;padding:34px 20px 22px}
+.voice-stage.active{display:grid;grid-template-rows:1fr auto 1fr;align-content:stretch}
+.voice-top{position:relative;z-index:5;max-width:620px;align-self:center;padding:14px 18px;animation:voiceTextReveal .8s .15s both}
+.voice-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #ffffff22;border-radius:999px;background:#05050572;color:#ddd;font-size:10px;letter-spacing:1.6px;font-weight:700;backdrop-filter:blur(12px)}
+.voice-badge-dot{width:6px;height:6px;border-radius:50%;background:#ff9a62;box-shadow:0 0 13px #ff874d;animation:voiceDotPulse 1.8s infinite}
+.voice-overline{margin:18px 0 4px;font-size:11px;letter-spacing:4px;color:#ffbd91;text-shadow:0 0 20px #ff884a80}
+.voice-top h2{margin:0;font-size:clamp(34px,6vw,64px);letter-spacing:-2px;line-height:1.02;text-shadow:0 6px 30px #000,0 0 40px #ffb47b30}
+.voice-top p{max-width:480px;margin:14px auto 0;color:#d0d0d0;font-size:clamp(13px,1.7vw,16px);text-shadow:0 2px 15px #000;line-height:1.65}
+.voice-center-ui{position:absolute;width:min(74vw,680px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;pointer-events:none;opacity:.76}
+.voice-orbit{position:absolute;left:50%;top:50%;border:1px solid #ffccaa20;border-radius:50%;transform:translate(-50%,-50%) rotate(-23deg);box-shadow:0 0 25px #ff894512,inset 0 0 25px #ff894510}
+.orbit-a{width:94%;height:48%;animation:voiceOrbit 19s linear infinite}
+.orbit-b{width:75%;height:37%;border-color:#ffc28f35;animation:voiceOrbit 13s linear infinite reverse}
+.orbit-c{width:112%;height:57%;border-color:#8e9dff23;animation:voiceOrbit 28s linear infinite}
+.voice-center-mark{position:absolute;left:50%;top:50%;width:12%;aspect-ratio:1;display:grid;place-items:center;transform:translate(-50%,-50%);font-size:clamp(8px,.9vw,12px);letter-spacing:2px;font-weight:900;color:#fff2e4;text-shadow:0 0 12px #ffad75,0 0 26px #ff7e4c;opacity:.45}
+.voice-center-mark i{position:absolute;width:260%;height:260%;border:1px solid #ffe1c622;border-radius:50%;animation:voiceCorePulse 3.5s ease-in-out infinite}
+.voice-bottom{position:relative;z-index:5;align-self:end;width:min(100%,570px);padding:16px 18px 18px;border:1px solid #ffffff18;border-radius:24px;background:linear-gradient(145deg,#101010ba,#0505058f);box-shadow:0 15px 70px #0009;backdrop-filter:blur(16px);animation:voiceTextReveal .9s .25s both}
+.voice-statusline{display:flex;align-items:center;justify-content:center;gap:9px;min-height:24px;color:#c7c7c7;font-size:12px;margin-bottom:13px}
+.voice-status-dot{width:7px;height:7px;flex:none;background:#777;border-radius:50%;box-shadow:0 0 0 4px #ffffff0a}
+.voice-status-dot.active{background:#ffac7b;box-shadow:0 0 15px #ff874d,0 0 0 5px #ff9e4a15;animation:voiceDotPulse .8s infinite}
+.voice-controls{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}
+.voice-mic-btn,.voice-return-btn{min-height:46px;border-radius:14px;padding:11px 17px;font-weight:700;border:1px solid #ffffff20;background:#111;color:#fff;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s}
+.voice-mic-btn{background:linear-gradient(120deg,#fff1e5,#ffb07a);color:#150b06;border:0;box-shadow:0 5px 28px #ff874a35}
+.voice-mic-btn:hover{box-shadow:0 7px 36px #ff874a65;transform:translateY(-1px)}
+.voice-return-btn:hover{border-color:#ffffff58;background:#1c1c1c}
+.voice-return-btn span:first-child{margin-right:5px}
+.voice-disclaimer{margin:12px auto 0;max-width:480px;color:#858585;font-size:11px;line-height:1.5}
+body.voice-mode{background:#000!important;overflow:hidden!important}
+body.voice-mode #blackHoleCanvas{z-index:1;opacity:1;mix-blend-mode:screen}
+body.voice-mode .app{position:fixed;inset:0;max-width:none;width:100vw;height:100dvh;min-height:100dvh;padding:0!important;margin:0;display:block;z-index:3;pointer-events:none}
+body.voice-mode .sidebar{position:fixed;top:calc(13px + env(safe-area-inset-top));left:calc(13px + env(safe-area-inset-left));z-index:125;width:auto;padding:0!important;margin:0;display:block;gap:0;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;pointer-events:none}
+body.voice-mode .sidebar>:not(.brand){display:none!important}
+body.voice-mode .brand{display:flex;pointer-events:auto;cursor:pointer;gap:10px;padding:5px 10px 5px 5px!important;border:1px solid #ffffff16!important;border-radius:17px;background:#05050559!important;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 7px 35px #0008;min-height:52px}
+body.voice-mode .brand .logo{flex:none;width:40px;height:40px;border-radius:13px}
+body.voice-mode .brand h1{font-size:17px;text-shadow:0 2px 14px #000}
+body.voice-mode .brand p{display:none!important}
+body.voice-mode .main{position:fixed;inset:0;width:100vw;height:100dvh;min-height:100dvh;margin:0;padding:0!important;overflow:hidden;border:0!important;border-radius:0!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;pointer-events:none;z-index:4}
+body.voice-mode .main>.topbar{display:none!important}
+body.voice-mode .view{pointer-events:none}
+body.voice-mode .view.voice-stage.active{position:fixed;inset:0;width:100vw;height:100dvh;min-height:100dvh;padding:calc(78px + env(safe-area-inset-top)) 18px calc(22px + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:space-between;align-items:center;gap:12px;background:transparent!important;pointer-events:none;animation:voiceStageReveal 1.05s cubic-bezier(.15,.8,.18,1) .65s both}
+body.voice-mode #voice .voice-top,body.voice-mode #voice .voice-bottom{pointer-events:auto}
+body.voice-mode .voice-top{align-self:center;padding:10px 13px;max-width:min(700px,100%)}
+body.voice-mode .voice-bottom{align-self:center;margin-bottom:0;max-width:600px}
+.voice-stage{min-height:calc(100dvh - 120px);padding:22px 12px}
+.voice-top h2{font-size:clamp(34px,10vw,48px);letter-spacing:-1.2px}
+.voice-badge{font-size:9px;letter-spacing:1px;padding:7px 10px}
+.voice-center-ui{width:95vw;opacity:.55}
+.voice-bottom{padding:13px 11px 14px;border-radius:19px;width:100%}
+.voice-controls{gap:8px}
+.voice-mic-btn,.voice-return-btn{min-height:43px;padding:10px 12px;font-size:12px}
+body.voice-mode .voice-top{padding:8px 5px}
+body.voice-mode .voice-top p{max-width:350px}
+body.voice-mode .voice-bottom{width:min(100%,520px);padding:13px 11px}
+body.voice-mode #drawer{width:min(86vw,330px)}
+.voice-orbit,.voice-center-mark i,.voice-badge-dot,.voice-status-dot.active{animation:none!important}
+body.voice-mode .view.voice-stage.active{animation:none!important}
+body.voice-mode #drawerBackdrop{top:0;right:0;bottom:0;left:0;width:100%;height:100%}
+body.voice-mode #storageNotice{display:none!important}
+body.voice-mode #drawer{top:0;bottom:0;left:0;height:100vh;height:100dvh;border-radius:0 22px 22px 0}
+@keyframes voiceTextReveal{from{opacity:0;transform:translateY(14px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes voiceDotPulse{0%,100%{opacity:.62;transform:scale(.9)}50%{opacity:1;transform:scale(1.18)}}
+@keyframes voiceOrbit{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes voiceCorePulse{0%,100%{transform:scale(.82);opacity:.25}50%{transform:scale(1.18);opacity:.8}}
+@keyframes voiceStageReveal{0%{opacity:0;transform:scale(.92);filter:blur(12px)}55%{opacity:1;transform:scale(1.012);filter:blur(0)}100%{opacity:1;transform:scale(1);filter:blur(0)}}

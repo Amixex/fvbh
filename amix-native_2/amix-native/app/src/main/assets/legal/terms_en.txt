@@ -1,0 +1,26 @@
+# Terms of Use
+_Version: [date]. Rights holder: [name], tax ID [ID]._
+
+## 1. Subject
+Amix is an Android app with a study AI assistant that runs on your device. By using the app you accept these terms.
+
+## 2. Use
+The app is meant for learning. AI can make mistakes: check important answers, they do not replace a teacher, tutor or reference book.
+
+## 3. Free period and PRO
+- The free period is 7 days (168 hours) from the first launch. All PRO features are available during it.
+- The server counts the time; restarting or deleting app data does not reset it.
+- After the period ends, a license key or promo code is required to continue.
+- Keys are sold by the developer (Telegram: https://t.me/AmixAiOffline). A key can be activated once and works on one device.
+
+## 4. Prohibited
+- reselling keys you did not get from the developer;
+- bypassing restrictions: faking the device identifier, modifying the app, guessing keys or promo codes;
+- using the Service to break the law.
+A license may be disabled for violations.
+
+## 5. Liability
+The Service is provided "as is". The rights holder is not liable for decisions made based on AI answers or for temporary unavailability of the server part (key checking).
+
+## 6. Changes and law
+The terms may change; the current version is available in the app. Russian law applies. Contact: [contact email].
