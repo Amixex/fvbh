@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Единая ссылка для всех кнопок «Приобрести PRO». Чтобы сменить, поменяйте её здесь и пересоберите приложение. -->
+    <string name="buy_url" translatable="false">https://t.me/AmixAiOffline</string>
+
+    <!-- Сервер на Supabase. Впишите Project URL и publishable key (Project Settings -> API Keys). Оба значения публичные.
+         Секретный (secret) ключ сюда вписывать нельзя. Если значения стерты или заменены на PASTE_..., приложение работает без сервера:
+         7 дней отсчитываются на устройстве, а активация ключей и промокодов недоступна. -->
+    <string name="supabase_url" translatable="false">https://rvbnsobjrnbfyhxatsck.supabase.co</string>
+    <string name="supabase_key" translatable="false">sb_publishable_GkA4ymrUkyAGYgHPpqB0YA_AceYfgA_</string>
+</resources>
