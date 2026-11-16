@@ -1,0 +1,17 @@
+name: Keep Supabase awake
+
+# Бесплатный проект Supabase засыпает после 7 дней без обращений. Раз в 3 дня отправляем лёгкий запрос.
+# Адрес и публичный ключ проекта вписаны прямо в файл (они публичные).
+on:
+  schedule:
+    - cron: '0 6 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -fsS --retry 3 -X POST "https://rvbnsobjrnbfyhxatsck.supabase.co/rest/v1/rpc/amix_ping" \
+            -H "apikey: sb_publishable_GkA4ymrUkyAGYgHPpqB0YA_AceYfgA_" -H "Content-Type: application/json" -d '{}'
